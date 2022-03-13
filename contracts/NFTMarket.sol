@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 
 contract NFTMarket is ReentrancyGuard {
-    using Counters for Counter.Counters;
-    Counters.Counter private _itemsIds;
+    using Counters for Counters.Counter;
+    Counters.Counter private _itemIds;
     Counters.Counter private _itemsSold;
 
     address payable owner; // Contract address where eth goes to
@@ -37,7 +37,7 @@ contract NFTMarket is ReentrancyGuard {
         address seller,
         address owner,
         uint256 price,
-        bool sold,
+        bool sold
     );
 
     function getListingPrice() public view returns (uint256) {
@@ -53,8 +53,8 @@ contract NFTMarket is ReentrancyGuard {
         require(price > 0, "Price must be at least 1 wei");
         require(msg.value == listingPrice, "Price must be equal to listing price");
 
-        _itemsIds.increment();
-        uint256 intemId = _itemIds.current();
+        _itemIds.increment();
+        uint256 itemId = _itemIds.current();
 
         idToMarketItem[itemId] = MarketItem(
             itemId,
@@ -82,7 +82,7 @@ contract NFTMarket is ReentrancyGuard {
     // Item sale
     function createMarketSale(
         address nftContract,
-        uint256 itemId,
+        uint256 itemId
     ) public payable nonReentrant {
         uint price = idToMarketItem[itemId].price;
         uint tokenId = idToMarketItem[itemId].tokenId;

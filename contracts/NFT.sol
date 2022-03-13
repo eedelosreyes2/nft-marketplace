@@ -10,7 +10,7 @@ contract NFT is ERC721URIStorage {
     Counters.Counter private _tokenIds;
     address contractAddress; // Marketplace address
     
-    constructor(address marketplaceAddress) ERC21("Metaverse Tokens", "METT") {
+    constructor(address marketplaceAddress) ERC721("Metaverse Tokens", "METT") {
         contractAddress = marketplaceAddress;
     }
 
