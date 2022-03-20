@@ -48,7 +48,7 @@ export default function CreateItem() {
     }
   }
 
-  async function createSale() {
+  async function createSale(url) {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -65,10 +65,10 @@ export default function CreateItem() {
     const price = ethers.utils.parseUnits(formInput.price, 'ether');
 
     contract = new ethers.Contract(nftMarketAddress, Market.abi, signer);
-    let listingPrice = await contract.listingPrice();
+    let listingPrice = await contract.getListingPrice();
     listingPrice = listingPrice.toString();
 
-    transaction = await contract.createMarketIten(nftAddress, tokenId, price, {
+    transaction = await contract.createMarketItem(nftAddress, tokenId, price, {
       value: listingPrice,
     });
     await transaction.wait();
